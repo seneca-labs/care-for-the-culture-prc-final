@@ -492,16 +492,19 @@ send a compliment</div>
       <h4>Purpose &amp; Intent</h4>
       <p><span class="ann-label">Summary:</span> Modal sheet for sending a compliment to another guest. The user selects one of four pre-written positive statements. There is no free-text input. The recipient sees the compliment as a notification; the sender is not revealed unless both parties have mutually exchanged contact details through the app.</p>
       <p><span class="ann-label">User Action:</span> Taps one of the pre-written compliments to send, or taps "cancel" to dismiss.</p>
+      <p><span class="ann-label">Delivery Mechanism:</span> When a compliment is sent, it is delivered as an SMS text to the recipient <em>from the feed's shared phone number</em> — not from the sender's personal number. The sender's identity is not revealed. This keeps the interaction anonymous and makes the party feel more welcoming by letting guests spread warmth without social risk.</p>
     </div>
 
     <div class="ann-section">
       <h4>Legal &amp; Compliance Language</h4>
       <p><span class="ann-label">Why this language is here:</span> Zero free-text input is a deliberate safety decision. All four compliments are affirming and focused on photo, outfit, energy, or presence — never on body, health, status, or sexual attributes. This structurally prevents harassment, unsolicited sexual messages, and accidental or intentional outing.</p>
+      <p><span class="ann-label">Anonymous SMS delivery:</span> Compliments are sent from the feed's single shared phone number. The recipient sees a text from the feed — never the sender's personal number. This removes outing risk, prevents any phone-number disclosure between guests, and reinforces the curated, welcoming tone of the experience.</p>
       <p><span class="ann-label">Concerns this addresses:</span></p>
       <ul>
         <li>Harassment and unsolicited contact on a social app serving the HIV-affected community</li>
         <li>Outing risk — no free text means no PrEP/HIV references can be sent</li>
-        <li>Platform liability — constrained interaction model is auditable</li>
+        <li>Phone-number privacy — senders' personal numbers are never exposed to recipients</li>
+        <li>Platform liability — constrained, from-the-feed-only delivery is auditable</li>
       </ul>
       <p><span class="ann-label">Legal basis:</span> State HIV confidentiality statutes; platform safety-by-design. Section 230 does not apply to first-party content; these compliments are author-approved brand content.</p>
     </div>
@@ -573,7 +576,7 @@ ready to turn up</div>
     <h3>Home Screen Map Toggle (Phone)</h3>
     <span class="frame-id">frame-home-map</span>
   </div>
-  <div class="frame-screenshot" style="display:grid;grid-template-columns:repeat(2,1fr);grid-auto-rows:1fr;gap:10px;align-content:start;justify-items:center;align-items:center;">
+  <div class="frame-screenshot" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:10px;height:100%;justify-items:center;align-items:center;">
     <img src="output/screenshots/frame-home-map-1.png" alt="Home Map — United States view" style="max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;">
     <img src="output/screenshots/frame-home-map-2.png" alt="Home Map — New York City view" style="max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;">
     <img src="output/screenshots/frame-home-map-3.png" alt="Home Map — Search view" style="max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;">
@@ -701,6 +704,7 @@ everything you share tonight is deleted within 24 hours.</div>
     <div class="ann-section">
       <h4>Legal &amp; Compliance Language</h4>
       <p><span class="ann-label">Why this language is here:</span> The Terms of Use and Privacy Policy links are surfaced before any data collection begins. This ensures that users have an opportunity to review applicable terms before opting into the experience.</p>
+      <p><span class="ann-label">Note:</span> Final Terms of Use and Privacy Policy copy is <strong>forthcoming</strong> and will be submitted for PRC review separately before production.</p>
       <p><span class="ann-label">Concerns this addresses:</span></p>
       <ul>
         <li>Informed consent prior to data collection</li>
@@ -1079,7 +1083,7 @@ continue</div>
     <h3>National Timeline<span class="variant-badge badge-connected">Connected</span></h3>
     <span class="frame-id">frame-8-connected</span>
   </div>
-  <div class="frame-screenshot" style="display:grid;grid-template-columns:repeat(2,1fr);grid-auto-rows:1fr;gap:10px;align-content:start;justify-items:center;align-items:center;">
+  <div class="frame-screenshot" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:10px;height:100%;justify-items:center;align-items:center;">
     <img src="output/screenshots/frame-8-connected-1.png" alt="National Timeline - connected variant (start)" style="max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;">
     <img src="output/screenshots/frame-8-connected-2.png" alt="National Timeline - connected variant (mid)" style="max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;">
     <img src="output/screenshots/frame-8-connected-3.png" alt="National Timeline - connected variant (end)" style="max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;">
@@ -1143,7 +1147,7 @@ aidsvu 2023 / see your community</div>
     <h3>National Timeline<span class="variant-badge badge-new">New / Skipped</span></h3>
     <span class="frame-id">frame-8-new</span>
   </div>
-  <div class="frame-screenshot" style="display:grid;grid-template-columns:repeat(2,1fr);grid-auto-rows:1fr;gap:10px;align-content:start;justify-items:center;align-items:center;">
+  <div class="frame-screenshot" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:10px;height:100%;justify-items:center;align-items:center;">
     <img src="output/screenshots/frame-8-new-1.png" alt="National Timeline - new/skipped variant (start)" style="max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;">
     <img src="output/screenshots/frame-8-new-2.png" alt="National Timeline - new/skipped variant (mid)" style="max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;">
     <img src="output/screenshots/frame-8-new-3.png" alt="National Timeline - new/skipped variant (end)" style="max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;">
@@ -1946,7 +1950,7 @@ aidsvu · 2023 · [neighborhood]
     <h3>Impact Card 5: Spread Awareness</h3>
     <span class="frame-id">frame-11-card-5</span>
   </div>
-  <div class="frame-screenshot" style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;align-content:center;justify-items:center;align-items:center;">
+  <div class="frame-screenshot" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;height:100%;justify-items:center;align-items:center;">
     <img src="output/screenshots/frame-11-card-5-1.png" alt="Spread Awareness (start)" style="max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;">
     <img src="output/screenshots/frame-11-card-5-2.png" alt="Spread Awareness (complete)" style="max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;">
   </div>
