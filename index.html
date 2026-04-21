@@ -343,15 +343,9 @@
     /* ========== SCREEN: preview mode ========== */
     @media screen {
       body {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
-        padding: 20px 0;
-        background: #666;
-      }
-      .slide {
-        box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        margin: 0;
+        padding: 0;
+        background: #2a2a2a;
       }
     }
   </style>
@@ -2382,15 +2376,23 @@ next</div>
 <style>
   /* Slideshow mode for web viewing */
   @media screen {
-    body { overflow: hidden; margin: 0; background: #2a2a2a; }
+    html, body { overflow: hidden; margin: 0; background: #2a2a2a; height: 100%; }
     .slide {
-      display: none;
+      display: none !important;
       width: 100vw;
       height: 100vh;
       overflow: hidden;
       page-break-before: auto !important;
+      box-sizing: border-box;
     }
-    .slide.active { display: block; }
+    .slide.active { display: block !important; }
+    /* Special image-only slides (kiosk design/stickers) keep flex centering */
+    .slide.active[style*="display:flex"],
+    .slide.active[style*="display: flex"] {
+      display: flex !important;
+      width: 100vw !important;
+      height: 100vh !important;
+    }
     .slide-cover.active {
       display: flex !important;
       width: 100vw !important;
@@ -2406,18 +2408,39 @@ next</div>
       display: grid !important;
       width: 100vw !important;
       height: 100vh !important;
-      padding: 2.5vh 3vw !important;
-      grid-template-columns: 28% 1fr !important;
-      grid-template-rows: auto 1fr !important;
+      padding: 2vh 2.5vw 8vh 2.5vw !important;
+      grid-template-columns: 32% 1fr !important;
+      grid-template-rows: auto minmax(0, 1fr) !important;
       grid-template-areas: "header header" "screenshot annotations" !important;
-      overflow: hidden;
-    }
-    .frame-screenshot img {
-      max-height: calc(100vh - 100px) !important;
-    }
-    .frame-annotations {
+      gap: 1vh 2vw !important;
       overflow: hidden !important;
+      box-sizing: border-box !important;
+      background: #EFE4CE !important;
+    }
+    .slide-frame.active .frame-header { grid-area: header !important; }
+    .slide-frame.active .frame-screenshot {
+      grid-area: screenshot !important;
+      display: flex !important;
+      align-items: flex-start !important;
+      justify-content: center !important;
+      overflow: hidden !important;
+      min-height: 0 !important;
+      min-width: 0 !important;
+    }
+    .slide-frame.active .frame-screenshot img {
+      max-width: 100% !important;
+      max-height: 100% !important;
+      width: auto !important;
+      height: auto !important;
+      object-fit: contain !important;
+    }
+    .slide-frame.active .frame-annotations {
+      grid-area: annotations !important;
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      min-height: 0 !important;
       font-size: 10pt !important;
+      padding-right: 8px !important;
     }
     .slide-cover, .slide-toc {
       width: 100vw !important;
@@ -2491,38 +2514,30 @@ next</div>
     if (e.key === 'ArrowLeft') { e.preventDefault(); navSlide(-1); }
   });
 
-  // Auto-fit annotation text so nothing cuts off
-  function fitAnnotations() {
-    document.querySelectorAll('.slide-frame').forEach(slide => {
-      const ann = slide.querySelector('.frame-annotations');
-      if (!ann) return;
-      // Start large, shrink to fit
-      let size = 11;
+  // Auto-fit annotation text to fit without scroll when possible
+  function fitCurrent() {
+    const slide = slides[current];
+    if (!slide) return;
+    const ann = slide.querySelector('.frame-annotations');
+    if (!ann) return;
+    let size = 11;
+    ann.style.fontSize = size + 'pt';
+    let tries = 0;
+    while (ann.scrollHeight > ann.clientHeight + 2 && size > 7 && tries < 30) {
+      size -= 0.25;
       ann.style.fontSize = size + 'pt';
-      let tries = 0;
-      while (ann.scrollHeight > ann.clientHeight + 2 && size > 5 && tries < 30) {
-        size -= 0.25;
-        ann.style.fontSize = size + 'pt';
-        tries++;
-      }
-    });
+      tries++;
+    }
   }
 
   showSlide(0);
-  // Fit all slides on load
-  setTimeout(() => {
-    // Temporarily show all slides to measure
-    slides.forEach(s => { s.style.display = 'grid'; s.style.position = 'absolute'; s.style.visibility = 'hidden'; });
-    fitAnnotations();
-    slides.forEach(s => { s.style.display = ''; s.style.position = ''; s.style.visibility = ''; });
-    showSlide(0);
-  }, 200);
-  // Re-fit on slide change
+  setTimeout(fitCurrent, 100);
   const origShowSlide = showSlide;
   showSlide = function(n) {
     origShowSlide(n);
-    setTimeout(fitAnnotations, 50);
+    setTimeout(fitCurrent, 50);
   };
+  window.addEventListener('resize', () => setTimeout(fitCurrent, 100));
 </script>
 
 </body>
