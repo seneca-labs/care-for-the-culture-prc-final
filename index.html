@@ -2546,19 +2546,23 @@ next</div>
     const setSize = (s) => {
       ann.style.fontSize = s + 'pt';
       // Tighten line-height + margins proportionally as size shrinks
-      const lh = Math.max(1.15, 1.45 - (11 - s) * 0.03);
+      const lh = Math.max(1.05, 1.45 - (11 - s) * 0.03);
       ann.style.lineHeight = lh;
     };
     setSize(size);
-    while (ann.scrollHeight > ann.clientHeight + 1 && size > 4 && tries < 40) {
+    // Shrink as much as needed — never allow scroll
+    while (ann.scrollHeight > ann.clientHeight + 1 && size > 2 && tries < 80) {
       size -= 0.25;
       setSize(size);
       tries++;
     }
-    // Final fallback: allow scroll only if we still don't fit at min size
-    if (ann.scrollHeight > ann.clientHeight + 2) {
-      ann.style.overflowY = 'auto';
+    // Keep shrinking in 0.1pt steps if still overflowing
+    while (ann.scrollHeight > ann.clientHeight + 1 && size > 1 && tries < 200) {
+      size -= 0.1;
+      setSize(size);
+      tries++;
     }
+    ann.style.overflowY = 'hidden';
   }
 
   showSlide(0);
