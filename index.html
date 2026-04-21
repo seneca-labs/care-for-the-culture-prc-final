@@ -2436,11 +2436,23 @@ next</div>
     }
     .slide-frame.active .frame-annotations {
       grid-area: annotations !important;
-      overflow-y: auto !important;
+      overflow-y: hidden;
       overflow-x: hidden !important;
       min-height: 0 !important;
-      font-size: 10pt !important;
       padding-right: 8px !important;
+    }
+    /* When auto-fit shrinks the annotations container font-size, inherit into children */
+    .slide-frame.active .frame-annotations p,
+    .slide-frame.active .frame-annotations li,
+    .slide-frame.active .frame-annotations .copy-verbatim,
+    .slide-frame.active .frame-annotations .data-callout,
+    .slide-frame.active .frame-annotations .callout-box,
+    .slide-frame.active .frame-annotations .part-number-field,
+    .slide-frame.active .frame-annotations .part-number-label {
+      font-size: inherit !important;
+    }
+    .slide-frame.active .frame-annotations h4 {
+      font-size: 0.92em !important;
     }
     .slide-cover, .slide-toc {
       width: 100vw !important;
@@ -2514,19 +2526,35 @@ next</div>
     if (e.key === 'ArrowLeft') { e.preventDefault(); navSlide(-1); }
   });
 
-  // Auto-fit annotation text to fit without scroll when possible
+  // Auto-fit annotation text so nothing requires scrolling
   function fitCurrent() {
     const slide = slides[current];
     if (!slide) return;
     const ann = slide.querySelector('.frame-annotations');
     if (!ann) return;
+    // Reset scaling affordances
+    ann.style.overflowY = 'hidden';
+    const scaleNodes = ann.querySelectorAll('p, li, h4, .copy-verbatim, .data-callout, .callout-box, .part-number-label, .part-number-field');
+    scaleNodes.forEach(n => { n.style.fontSize = ''; n.style.lineHeight = ''; n.style.marginBottom = ''; });
+    ann.style.fontSize = '';
+
     let size = 11;
-    ann.style.fontSize = size + 'pt';
     let tries = 0;
-    while (ann.scrollHeight > ann.clientHeight + 2 && size > 7 && tries < 30) {
+    const setSize = (s) => {
+      ann.style.fontSize = s + 'pt';
+      // Tighten line-height + margins proportionally as size shrinks
+      const lh = Math.max(1.15, 1.45 - (11 - s) * 0.03);
+      ann.style.lineHeight = lh;
+    };
+    setSize(size);
+    while (ann.scrollHeight > ann.clientHeight + 1 && size > 4 && tries < 40) {
       size -= 0.25;
-      ann.style.fontSize = size + 'pt';
+      setSize(size);
       tries++;
+    }
+    // Final fallback: allow scroll only if we still don't fit at min size
+    if (ann.scrollHeight > ann.clientHeight + 2) {
+      ann.style.overflowY = 'auto';
     }
   }
 
